@@ -80,7 +80,7 @@ export const checkout = TryCatch(async (req, res) => {
     currency: "INR",
   };
 
-  const order = await instance.orders.create(options);
+  const order = await instance.orders.create(options);  
 
   res.status(201).json({
     order,

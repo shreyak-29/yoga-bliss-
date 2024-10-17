@@ -12,7 +12,8 @@ const CourseDescription = ({ user }) => {
   const params = useParams();
   const navigate = useNavigate();
 
-  const [loading, setLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [paymentError , setPaymentError] = useState(null)
 
   const { fetchUser } = UserData();
 
@@ -23,74 +24,74 @@ const CourseDescription = ({ user }) => {
   }, [params.id]); // Add params.id to dependency array
   
 
-  const checkoutHandler = async () => {
-    const token = localStorage.getItem("token");
-    setLoading(true);
+  const handlePayment = async (e,amount) => {
+    e.preventDefault();
+    setIsLoading(true);
+    setPaymentError("");
 
-    const {
-      data: { order },
-    } = await axios.post(
-      `${server}/api/course/checkout/${params.id.trim()}`,
-      {},
-      {
-        headers: {
-          token,
-        },
-      }
-    );
-
-    const options = {
-      //key: "rzp_test_yOMeMyaj2wlvTt", // Enter the Key ID generated from the Dashboard
-      key: "rzp_test_1IaKQ0EvmyX3k8", // Enter the Key ID generated from the Dashboard
-
-      amount: order.id * 100, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
-      currency: "INR",
-      name: "YogaBliss", //your business name
-      description: "Inhale, Exhale, Inspire",
-      order_id: order.id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
-
-      handler: async function (response) {
-        const { razorpay_order_id, razorpay_payment_id, razorpay_signature } =
-          response;
-
-        try {
-          const { data } = await axios.post(
-            `${server}/api/verification/${params.id}`,
+    try {
+        // Step 1: Make a request to create the payment order
+        const response = await axios.post(
+            `${server}/api/v1/payment`,
+            { amount }, // Amount in rupees
             {
-              razorpay_order_id,
-              razorpay_payment_id,
-              razorpay_signature,
-            },
-            {
-              headers: {
-                token,
-              },
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${JSON.parse(
+                        localStorage.getItem("accessToken")
+                    )}`,
+                },
             }
-          );
+        );
 
-          await fetchUser();
-          await fetchCourses();
-          await fetchMyCourse();
-          toast.success(data.message);
-          setLoading(false);
-          navigate(`/payment-success/${razorpay_payment_id}`);
-        } catch (error) {
-          toast.error(error.response.data.message);
-          setLoading(false);
+        // Step 2: Check if the backend response was successful
+        if (response.data.success) {
+            let options = {
+                key: response.data.key_id,
+                amount: response.data.amount,
+                currency: "INR",
+                name: "Yoga Bliss",
+                description: "Buying/Selling yogo",
+                image: "/your_logo.png", // Optional logo
+                handler: function (paymentResponse) {
+                    alert(`Payment successful! Payment ID: ${paymentResponse.razorpay_payment_id}`);
+                },
+                prefill: {
+                    name: "Riddhi Patel",
+                    email: "riddhi@razorpay.com",
+                },
+                notes: {
+                    address: "Yoga Bliss",
+                },
+                theme: {
+                    color: "#1A202C", // Dark theme color
+                },
+                // Step 3: Handle payment closure or cancellation
+                onClose: function () {
+                    console.log("Payment popup closed by the user.");
+                    setPaymentError("Payment was not completed.");
+                },
+            };
+
+            // Step 4: Open Razorpay payment form
+            const rzp = new window.Razorpay(options);
+            rzp.open();
+        } else {
+            // Handle failure response from the backend
+            setPaymentError(response.data.message || "Payment order creation failed");
         }
-      },
-      theme: {
-        color: "#8a4baf",
-      },
-    };
-    const razorpay = new window.Razorpay(options);
-
-    razorpay.open();
-  };
-
+    } catch (error) {
+        // Log error details for debugging
+        console.error("Error creating Razorpay order:", error);
+        setPaymentError("There was an issue processing the payment. Please try again.");
+    } finally {
+        // Reset loading state after the process is complete
+        setIsLoading(false);
+    }
+};
   return (
     <>
-      {loading ? (
+      {isLoading ? (
         <Loading />
       ) : (
         <>
@@ -121,11 +122,16 @@ const CourseDescription = ({ user }) => {
                   Study
                 </button>
               ) : (
-                <button onClick={checkoutHandler} className="common-btn">
+                <button onClick={(e) => handlePayment(e,course.price)} className="common-btn">
                   Buy Now
                 </button>
               )}
             </div>
+          )}
+          {paymentError && (
+              <div className="mt-4 text-sm text-red-600">
+                  {paymentError}
+              </div>
           )}
         </>
       )}
