@@ -7,7 +7,10 @@ const Header = ({ isAuth }) => {
     <header>
     
 
-      <div className="logo">YogaBliss</div>
+    <div className="logo">
+      <img src="/yoga.png" alt="YogaBliss Logo" className="logo-image" />
+      
+      YogaBliss</div>
 
       <div className="link">
         <Link to={"/"}>Home</Link>

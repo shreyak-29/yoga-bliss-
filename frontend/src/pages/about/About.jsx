@@ -1,10 +1,14 @@
 import React from "react";
 import "./about.css";
 
+
+
 const About = () => {
   return (
     <div className="about">
       <div className="about-content">
+      <img src="/YogaGif.gif" alt="Women Doing Yoga" className="yoga-gif" />
+
         <h2>About Us</h2>
         <p>
           At <strong>YogaBliss</strong>, we believe in the transformative power of yoga to balance your body, mind, and spirit. Our mission is to foster a welcoming online community where people of all backgrounds can embark on their personal wellness journey, find inner peace, and achieve a healthier lifestyle.

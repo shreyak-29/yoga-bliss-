@@ -5,6 +5,12 @@
   background: linear-gradient(135deg, #e6f7e6, #c9e4ff); /* Adjusted gradient for a greener look */
   font-family: 'Poppins', sans-serif;
 }
+.yoga-gif {
+  width: 100%; /* Adjust as needed, or set a specific width */
+  max-width: 450px; /* Set a maximum width */
+  height: auto; /* Maintain aspect ratio */
+  margin: 20px 0; /* Space above and below the GIF */
+}
 
 .about-content {
   max-width: 900px;

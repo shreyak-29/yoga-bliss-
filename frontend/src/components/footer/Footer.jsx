@@ -15,13 +15,13 @@ const Footer = () => {
           with ❤️ <a href="">Team</a>
         </p>
         <div className="social-links">
-          <a href="">
+          <a href="https://www.facebook.com/IndianYogaAssociation.IYA/">
             <AiFillFacebook />
           </a>
-          <a href="">
+          <a href="https://x.com/yogaatiya?lang=en">
             <AiFillTwitterSquare />
           </a>
-          <a href="">
+          <a href="https://www.instagram.com/indianyogaassociation.iya/?hl=en">
             <AiFillInstagram />
           </a>
         </div>

@@ -7,7 +7,21 @@ header {
   box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.15); /* Soft shadow for a modern look */
   position: relative;
   backdrop-filter: blur(8px); /* Slight blur effect for a glassmorphic look */
+ 
+  .logo-image {
+    vertical-align: middle;
+    width: 50px; /* Set desired width */
+    height: auto; /* Maintains aspect ratio */
+    margin-right: 10px; /* Adjust as needed */
 
+  }
+
+  .logo-container {
+    display: inline-flex;  /* Aligns items horizontally */
+    align-items: center;  /* Aligns both image and text on the same x-axis */
+  }
+  
+  
   .logo {
     font-size: 30px; /* Increased font size for better visibility */
     font-weight: 700; /* Slightly bolder font */
