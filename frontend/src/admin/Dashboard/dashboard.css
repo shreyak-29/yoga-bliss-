@@ -1,0 +1,33 @@
+
+.main-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 20px; /* Added for consistent spacing between boxes */
+}
+
+.box {
+  margin-left: 20px;
+  background: linear-gradient(135deg, #e0f7e0, #b3e6b3); /* Slightly darker gradient */
+
+  
+  padding: 15px; /* Increased padding for better spacing */
+  border-radius: 8px; /* Slightly rounded corners */
+  text-align: center;
+  margin-top: 10px; /* Adjusted margin for better alignment */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Added subtle shadow */
+
+
+  &:hover {
+    transform: translateY(-5px); /* Slight lift on hover */
+  }
+
+  p {
+    font-size: 1.2rem; /* Increased font size */
+    margin: 10px 0; /* Spacing between text */
+    font-weight: bold; /* Bold for emphasis */
+  }
+
+}
+

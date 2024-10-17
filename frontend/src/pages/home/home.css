@@ -1,0 +1,86 @@
+.home {
+  background: url('../../assets/home/banner-1.jpg') no-repeat center center; /* Set your background image */
+    background-size: cover; /* Cover the section */
+    height: 70vh; /* Occupy about 70% of the screen height */
+    display: flex; /* Use flexbox for centering */
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+    text-align: center;
+    color: white; /* Default text color for better visibility */
+    position: relative; /* Position relative for layering */
+    padding: 0 20px; /* Horizontal padding for smaller screens */
+
+    &::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.3); /* Dark overlay with 30% opacity */
+      z-index: 1; /* Place behind text */
+    }
+  
+  
+    h1 {
+      font-size: 48px; /* Increased font size */
+      margin-bottom: 20px;
+      font-family: 'Montserrat', sans-serif; /* Stylish font for headings */
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7); /* Text shadow for better visibility */
+      line-height: 1.2; /* Improve line height for better readability */
+      position: relative; /* Ensure text is above the overlay */
+      z-index: 2; /* Place above overlay */
+  
+      @media (max-width: 768px) {
+        font-size: 36px; /* Responsive font size */
+      }
+    }
+  
+    p {
+      font-size: 25px; /* Increased font size */
+      margin-bottom: 40px;
+      color: white; /* Default text color for better visibility */
+
+      line-height: 1.6; /* Improved line spacing */
+      text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7); /* Text shadow for better visibility */
+      position: relative; /* Ensure text is above the overlay */
+      z-index: 2; /* Place above overlay */
+  
+      @media (max-width: 768px) {
+        font-size: 18px; /* Responsive font size */
+      }
+    }
+
+    .button-container {
+      display: flex; /* Enable flexbox */
+      justify-content: center; /* Center button horizontally */
+      margin-top: 20px; /* Optional margin to separate from text */
+      z-index: 2; /* Ensure it’s above the overlay */
+    }
+    
+  
+    button {
+      padding: 12px 24px;
+      background-color: #145a32; /* YogaBliss theme color */
+      color: white;
+      border: none;
+
+      border-radius: 30px; /* Rounded button */
+      cursor: pointer;
+      font-size: 20px;
+      transition: background-color 0.3s ease, transform 0.2s ease; /* Smooth transitions */
+      position: relative; /* Ensure text is above the overlay */
+      z-index: 2; /* Place above overlay */
+  
+      &:hover {
+        background-color: #45a049; /* Darker shade on hover */
+        transform: scale(1.05); /* Slightly enlarges on hover */
+      }
+  
+      &:focus {
+        outline: none; /* Remove default outline on focus */
+        box-shadow: 0 0 5px rgba(76, 175, 80, 0.5); /* Add a glow effect */
+      }
+    }
+  }
+  

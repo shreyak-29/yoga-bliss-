@@ -1,0 +1,82 @@
+.testimonials {
+  padding: 80px 0;
+  text-align: center;
+  background: linear-gradient(135deg, #e6f7e6, #c9e4ff); /* Adjusted gradient for a greener look */
+
+
+  h2 {
+    font-size: 36px;
+    color: #145a32;
+    margin-bottom: 30px;
+    
+  }
+
+  .testmonials-cards {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 30px;
+  }
+
+  .testimonial-card {
+    background-color: white;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    border-radius: 10px;
+    width: 300px;
+    text-align: center; /* Center text */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: all 0.3s ease; /* Smooth transition for hover effects */
+  
+    @media (max-width: 768px) {
+      width: 80%;
+      text-align: center;
+    }
+  }
+  
+  /* This part should be separate from the media query */
+  .testimonial-card:hover {
+    transform: scale(1.05); /* Slightly enlarges the card */
+    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.15); /* Stronger shadow on hover */
+  }
+  
+      
+      
+      
+
+      .student-image {
+        img {
+          width: 80px;
+          height: 80px;
+          border-radius: 50%;
+          object-fit: cover;
+          margin-bottom: 10px;
+        }
+      }
+
+      .message {
+        font-size: 16px;
+        color: #333;
+        margin-bottom: 10px;
+      }
+
+      .info {
+        text-align: center;
+      }
+
+      .name {
+        font-size: 18px;
+        font-weight: bold;
+        color: #145a32;
+        margin-bottom: 5px;
+      }
+
+      .position {
+        font-size: 14px;
+        color: #666;
+      }
+    }
+  
+
