@@ -16,61 +16,25 @@ export const register = TryCatch(async (req, res) => {
 
   const hashPassword = await bcrypt.hash(password, 10);
 
-  user = {
+  // Create the user object with hashed password
+  user = new User({
     name,
     email,
     password: hashPassword,
-  };
+  });
 
-  const otp = Math.floor(Math.random() * 1000000);
-
-  const activationToken = jwt.sign(
-    {
-      user,
-      otp,
-    },
-    process.env.Activation_Secret,
-    {
-      expiresIn: "5m",
-    }
-  );
-
-  const data = {
-    name,
-    otp,
-  };
-
-  await sendMail(email, "E learning", data);
+  // Save the user directly without OTP verification
+  await user.save();
 
   res.status(200).json({
-    message: "Otp send to your mail",
-    activationToken,
+    message: "User successfully registered",
   });
 });
 
 export const verifyUser = TryCatch(async (req, res) => {
-  const { otp, activationToken } = req.body;
-
-  const verify = jwt.verify(activationToken, process.env.Activation_Secret);
-
-  if (!verify)
-    return res.status(400).json({
-      message: "Otp Expired",
-    });
-
-  if (verify.otp !== otp)
-    return res.status(400).json({
-      message: "Wrong Otp",
-    });
-
-  await User.create({
-    name: verify.user.name,
-    email: verify.user.email,
-    password: verify.user.password,
-  });
-
-  res.json({
-    message: "User Registered",
+  // OTP verification logic is removed because we're skipping OTP in the registration process now
+  res.status(400).json({
+    message: "OTP verification is no longer required for registration",
   });
 });
 
@@ -84,9 +48,9 @@ export const loginUser = TryCatch(async (req, res) => {
       message: "No User with this email",
     });
 
-  const mathPassword = await bcrypt.compare(password, user.password);
+  const matchPassword = await bcrypt.compare(password, user.password);
 
-  if (!mathPassword)
+  if (!matchPassword)
     return res.status(400).json({
       message: "wrong Password",
     });
@@ -129,7 +93,7 @@ export const forgotPassword = TryCatch(async (req, res) => {
   await user.save();
 
   res.json({
-    message: "Reset Password Link is send to you mail",
+    message: "Reset Password Link is send to your mail",
   });
 });
 
